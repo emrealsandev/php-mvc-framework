@@ -1,0 +1,15 @@
+{
+    "name": "emrea/phpmvc-framework",
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "Emre ALŞAN",
+            "email": "97472215+emrealsandev@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}
