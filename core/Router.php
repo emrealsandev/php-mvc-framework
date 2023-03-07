@@ -10,20 +10,31 @@ class Router
 {
 
     public Request $request;
+    public Response $response;
     protected array $routes = [];
-
-    public const VIEWPATH = __DIR__."/../views/";
-    public const EXTENSION = ".php";
-
-    public function __construct(\app\core\Request $request)
+    
+    /**
+     * __construct
+     *
+     * @param  mixed $request
+     * @param  mixed $response
+     * @return void
+     */
+    public function __construct(Request $request, Response $response)
     {
         $this->request = $request;
+        $this->response = $response;
     }
 
 
     public function get($path, $callback)
     {
         $this->routes['get'][$path] = $callback;
+    }
+
+    public function post($path, $callback)
+    {
+        $this->routes['post'][$path] = $callback;
     }
 
 
@@ -34,37 +45,36 @@ class Router
 
         $callback = $this->routes[$method][$path] ?? false;
 
-        if ($callback == false) {
-            return "Not Found";
-        }
+        if ($callback === false) {
+            $this->response->setStatusCode(404);
+            return $this->renderView("_404");
+        } 
 
-        if(is_string($callback)){
+        if (is_string($callback)) {
             return $this->renderView($callback);
         }
 
         return call_user_func($callback);
-
     }
 
     public function renderView($view)
     {
         $layoutContent = $this->layoutContent();
         $viewContent = $this->renderOnlyView($view);
-        return str_replace('{{content}}', $viewContent , $layoutContent);
+        return str_replace('{{content}}', $viewContent, $layoutContent);
     }
 
     protected function layoutContent()
     {
         ob_start();
-        include_once Router::VIEWPATH."layouts/main".Router::EXTENSION;
+        include_once Application::$ROOT_DIR."/views/layouts/main.php";
         return ob_get_clean();
     }
 
-    protected function renderOnlyView($view){
+    protected function renderOnlyView($view)
+    {
         ob_start();
-        include_once Router::VIEWPATH.$view.Router::EXTENSION;
+        include_once Application::$ROOT_DIR."/views/$view.php";
         return ob_get_clean();
     }
-
-
 }

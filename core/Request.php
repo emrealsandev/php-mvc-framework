@@ -12,10 +12,9 @@ class Request
 
     public function getPath()
     {
-        $url = $_GET['url'] ?? '';
-        $path = Request::PREFIXURL.$url;
+        $path = $_SERVER['REQUEST_URI'] ?? '/';
         $position = strpos($path,'?');
-        if ($position == false) {
+        if ($position === false) {
             return $path;
         }
         return substr($path,0, $position);
