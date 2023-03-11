@@ -9,7 +9,6 @@ abstract class Model
     public const RULE_MIN = 'min';
     public const RULE_MAX = 'max';
     public const RULE_MATCH = 'match';
-    public $emre = "emre";
 
     public function loadData($data)
     {
