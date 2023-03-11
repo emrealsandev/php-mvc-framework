@@ -19,7 +19,7 @@ class RegisterModel extends Model
 
     public function rules(): array
     {
-        // Aynen
+        return [];
     }
 
 }
