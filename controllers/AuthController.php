@@ -20,21 +20,15 @@ class AuthController extends Controller
         if ($request->isPost()) {
             $m_register->loadData($request->getBody());
 
-            echo '<pre>';
-            var_dump($m_register);
-            echo '</pre>';
-            exit;
-
             if ($m_register->validate() && $m_register->register()) {
                 return 'Success';
             }
-
-            return $this->render('register',[
+            return $this->render('register', [
                 'model' => $m_register,
             ]);
         }
         $this->setLayout('auth');
-        return $this->render('register',[
+        return $this->render('register', [
             'model' => $m_register,
         ]);
     }
