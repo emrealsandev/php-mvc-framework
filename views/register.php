@@ -4,7 +4,10 @@
         <div class="col">
             <div class="form-group">
                 <label>İsim</label>
-                <input type="text" name="name" class="form-control">
+                <input type="text" name="name" value="<?php echo !empty($model->name) ? $model->name : ''  ?>" class="form-control<?php echo $model->hasError('name') ? ' is-invalid' : '' ?>">
+                <div class="invalid-feedback">
+                    <?php echo $model->getFirstError('name') ?>
+                </div>
             </div>
         </div>
         <div class="col">
