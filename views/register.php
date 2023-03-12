@@ -2,7 +2,7 @@
 <?php $form = \app\core\form\Form::begin('', 'post'); ?>
 <div class="row">
     <div class="col">
-        <?php echo $form->field($model, 'name') ?>
+        <?php echo $form->field($model, 'firstname') ?>
     </div>
     <div class="col">
         <?php echo $form->field($model, 'lastname') ?>
