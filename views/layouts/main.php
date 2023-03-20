@@ -1,8 +1,8 @@
-<?php
-$basePath = '/';
+<?php 
+use app\core\Application; 
 ?>
 <!doctype html>
-<html lang="en">
+<html lang="tr">
 
 <head>
     <meta charset="utf-8">
@@ -39,6 +39,11 @@ $basePath = '/';
     </nav>
 
     <div class="container">
+        <?php if(Application::$app->session->getFlash('success')): ?>
+            <div class="alert alert-success">
+                <?php echo Application::$app->session->getFlash('success') ?>
+            </div>
+        <?php endif; ?>
         {{content}}
     </div>
 
