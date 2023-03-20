@@ -12,14 +12,10 @@ class Session
         foreach ($flashMessages as $key => &$flashMessage) {
             // Kullanılanı kaldır
             $flashMessage['remove'] = true;
+            
         }
-
+            
         $_SESSION[self::FLASH_KEY] = $flashMessages;
-        echo '<pre>';
-        var_dump($_SESSION[self::FLASH_KEY]);
-        echo '</pre>';
-        
-
     }
 
     public function setFlash($key, $message)
@@ -32,7 +28,7 @@ class Session
     
     public function getFlash($key)
     {
-        
+        return $_SESSION[self::FLASH_KEY][$key]['value'] ?? false;
     }
 
     public function __destruct()
@@ -40,10 +36,9 @@ class Session
         $flashMessages = $_SESSION[self::FLASH_KEY] ?? [];
         foreach ($flashMessages as $key => &$flashMessage) {
             if ($flashMessage['remove']) {
-                unset($flashMessage[$key]);
+                unset($flashMessages[$key]);
             }
         }
-
         $_SESSION[self::FLASH_KEY] = $flashMessages;
     }
 }
