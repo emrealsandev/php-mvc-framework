@@ -57,7 +57,7 @@ class Router
             \app\core\Application::$app->controller = new $callback[0];
             $callback[0] = \app\core\Application::$app->controller;
         }
-        return call_user_func($callback, $this->request);
+        return call_user_func($callback, $this->request, $this->response);
     }
 
     public function renderView($view,$params = [])
