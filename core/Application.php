@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace app\core;
 
@@ -6,6 +6,7 @@ class Application
 {
     public static string $ROOT_DIR;
 
+    public string $layout = 'main';
     public string $userClass;
     public Router $router;
     public Request $request;
@@ -16,7 +17,8 @@ class Application
     public Controller $controller;
     public ?DbModel $user;
 
-    public function __construct($rootPath, array $config) {
+    public function __construct($rootPath, array $config)
+    {
         $this->userClass = $config['userClass'];
         self::$ROOT_DIR = $rootPath;
         self::$app = $this;
@@ -24,22 +26,28 @@ class Application
         $this->response = new Response();
         $this->session = new Session();
         $this->router = new Router($this->request, $this->response);
-        
+
         $this->db = new Database($config['db']);
 
         $primaryValue = $this->session->get('user');
         if ($primaryValue) {
             $primaryKey = (new $this->userClass)->primaryKey();
             $this->user = (new $this->userClass)->findOne([$primaryKey => $primaryValue]);
-        }else {
+        } else {
             $this->user = null;
         }
-        
     }
 
     public function run()
     {
-        echo $this->router->resolve();
+        try {
+            echo $this->router->resolve();
+        } catch (\Exception $e) {
+            $this->response->setStatusCode($e->getCode());
+            echo $this->router->renderView('_error', [
+                'exception' => $e,
+            ]);
+        }
     }
 
     public function getController()
@@ -58,7 +66,7 @@ class Application
         $this->user = $user;
         $primaryKey = $user->primaryKey();
         $primaryValue = $user->{$primaryKey};
-        $this->session->set('user',$primaryValue);
+        $this->session->set('user', $primaryValue);
         return true;
     }
 
@@ -72,5 +80,4 @@ class Application
     {
         return !self::$app->user;
     }
-
 }

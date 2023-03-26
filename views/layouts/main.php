@@ -41,6 +41,9 @@ use app\core\Application;
             <?php else : ?>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
+                        <a class="nav-link" href="/profile">Profil</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="/logout">Hoş Geldin <?php echo Application::$app->user->getDisplayName() ?> (Çıkış yap)
                         </a>
                     </li>
