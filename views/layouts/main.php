@@ -1,5 +1,7 @@
-<?php 
-use app\core\Application; 
+<?php
+
+use app\core\Application;
+
 ?>
 <!doctype html>
 <html lang="tr">
@@ -27,19 +29,31 @@ use app\core\Application;
                     <a class="nav-link" href="/contact">Contact</a>
                 </li>
             </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/register">Register</a>
-                </li>
-            </ul>
+            <?php if (Application::isGuest()) : ?>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                </ul>
+            <?php else : ?>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Profil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Hoş Geldin <?php echo Application::$app->user->getDisplayName() ?> (Çıkış yap)
+                        </a>
+                    </li>
+                </ul>
+            <?php endif; ?>
         </div>
     </nav>
 
     <div class="container">
-        <?php if(Application::$app->session->getFlash('success')): ?>
+        <?php if (Application::$app->session->getFlash('success')) : ?>
             <div class="alert alert-success">
                 <?php echo Application::$app->session->getFlash('success') ?>
             </div>

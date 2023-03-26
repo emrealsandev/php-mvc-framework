@@ -4,8 +4,9 @@ namespace app\models;
 
 use app\core\DbModel;
 use app\core\Model;
+use app\core\UserModel;
 
-class User extends DbModel
+class User extends UserModel
 {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
@@ -23,6 +24,11 @@ class User extends DbModel
         return 'users';
     }
 
+    public function primaryKey(): string
+    {
+        return 'id';
+    }
+
     public function save()
     {
         $this->status = self::STATUS_INACTIVE;
@@ -37,7 +43,7 @@ class User extends DbModel
             'lastname' => [self::RULE_REQUIRED],
             'email' => [self::RULE_REQUIRED, self::RULE_EMAIL, [
                 self::RULE_UNIQUE, 'class' => self::class
-                ]],
+            ]],
             'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 2], [self::RULE_MAX, 'max' => 24]],
             'confirmPassword' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'password']],
         ];
@@ -45,10 +51,10 @@ class User extends DbModel
 
     public function attributes(): array
     {
-        return ['firstname','lastname','email','password','status'];   
+        return ['firstname', 'lastname', 'email', 'password', 'status'];
     }
 
-    public function labels(): array     
+    public function labels(): array
     {
         return [
             'firstname' => 'Ad',
@@ -59,4 +65,8 @@ class User extends DbModel
         ];
     }
 
+    public function getDisplayName(): string
+    {
+        return $this->firstname.' '.$this->lastname;
+    }
 }
