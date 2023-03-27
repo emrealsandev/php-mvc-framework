@@ -2,6 +2,8 @@
 
 namespace app\core;
 
+use app\core\db\Database;
+
 class Application
 {
     public static string $ROOT_DIR;
@@ -15,7 +17,7 @@ class Application
     public Database $db;
     public static Application $app;
     public Controller $controller;
-    public ?DbModel $user;
+    public ?UserModel $user;
     public View $view;
 
     public function __construct($rootPath, array $config)
@@ -63,7 +65,7 @@ class Application
     }
 
 
-    public function login(DbModel $user)
+    public function login(UserModel $user)
     {
         $this->user = $user;
         $primaryKey = $user->primaryKey();
