@@ -2,7 +2,9 @@
 
 namespace app\core;
 
-abstract class degisecek extends DbModel
+use app\core\db\DbModel;
+
+abstract class UserModel extends DbModel
 {
     abstract public function getDisplayName(): string;
 }
