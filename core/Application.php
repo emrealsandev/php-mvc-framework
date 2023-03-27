@@ -63,7 +63,7 @@ class Application
     }
 
 
-    public function login(DbModel $user)
+    public function login(degisecek $user)
     {
         $this->user = $user;
         $primaryKey = $user->primaryKey();
