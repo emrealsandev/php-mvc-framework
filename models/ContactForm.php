@@ -28,4 +28,9 @@ class ContactForm extends Model
         ];
     }
 
+    public function send()
+    {
+        return true;
+    }
+
 }
